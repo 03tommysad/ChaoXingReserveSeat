@@ -30,7 +30,7 @@ jobs:
           USERNAMES: ${{ secrets.USERNAMES }}
           PASSWORDS: ${{ secrets.PASSWORDS }}
         run: |
-          date +"%Y-%m-%d %H:%M:%S"
+          date 
           python main.py -m debug --action
 
 
