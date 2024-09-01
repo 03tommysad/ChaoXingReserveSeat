@@ -4,14 +4,14 @@
         "password": "",
         "time": ["11:00","22:00"],
         "roomid":"2609",
-        "seatid":["172","171","170","169"],
+        "seatid":["172","171","170","169","168","167"],
         "daysofweek": ["Monday" , "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday"]
     },
         {"username": "",
         "password": "",
         "time": ["11:00","22:00"],
         "roomid":"2609",
-        "seatid":["172","171","170","169"],
+        "seatid":["172","171","170","169","168","167"],
         "daysofweek": ["Monday" , "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday"]
     }
     ]
