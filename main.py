@@ -4,6 +4,7 @@ import time
 import argparse
 import os
 import logging
+from datetime import datetime, timedelta
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
@@ -48,9 +49,7 @@ def login_and_reserve(users, usernames, passwords, action, success_list=None):
 
 def main(users, action=False):
     current_time = get_current_time(action)
-    while current_time <= 12:15:00:
-      time.sleep(30)
-      logging.info(f'sleep 30s')
+    
     logging.info(f"**********start time {current_time}, action {'on' if action else 'off'}********")
     attempt_times = 0
     usernames, passwords = None, None
@@ -73,6 +72,13 @@ def main(users, action=False):
 
 def debug(users, action=False):
     current_time = get_current_time(action)
+    current_time_dt = datetime.strptime(current_time, "%H:%M:%S")
+    target_time_dt = datetime.strptime("12:23:00", "%H:%M:%S")
+    while current_time_dt <= target_time_dt:
+      time.sleep(30)
+      logging.info('sleep 30s')
+      current_time = get_current_time(action)
+      current_time_dt = datetime.strptime(current_time, "%H:%M:%S")
     logging.info(f'****debug_current_time{current_time}************')
     logging.info(f"Global settings: \nSLEEPTIME: {SLEEPTIME}\nENDTIME: {ENDTIME}\nENABLE_SLIDER: {ENABLE_SLIDER}\nRESERVE_NEXT_DAY: {RESERVE_NEXT_DAY}")
     suc = False
