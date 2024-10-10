@@ -73,7 +73,7 @@ def main(users, action=False):
 def debug(users, action=False):
     current_time = get_current_time(action)
     current_time_dt = datetime.strptime(current_time, "%H:%M:%S")
-    target_time_dt = datetime.strptime("12:23:00", "%H:%M:%S")
+    target_time_dt = datetime.strptime("20:23:00", "%H:%M:%S")
     while current_time_dt <= target_time_dt:
       time.sleep(30)
       logging.info('sleep 30s')
