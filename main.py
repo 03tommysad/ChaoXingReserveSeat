@@ -48,6 +48,9 @@ def login_and_reserve(users, usernames, passwords, action, success_list=None):
 
 def main(users, action=False):
     current_time = get_current_time(action)
+    while current_time <= 12:15:00:
+      time.sleep(30)
+      logging.info(f'sleep 30s')
     logging.info(f"**********start time {current_time}, action {'on' if action else 'off'}********")
     attempt_times = 0
     usernames, passwords = None, None
