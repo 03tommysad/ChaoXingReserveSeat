@@ -16,7 +16,7 @@ SLEEPTIME = 0.2 # 每次抢座的间隔
 ENDTIME = "07:01:00" # 根据学校的预约座位时间+1min即可
 
 ENABLE_SLIDER = False # 是否有滑块验证
-MAX_ATTEMPT = 2 # 最大尝试次数
+MAX_ATTEMPT = 1 # 最大尝试次数
 RESERVE_NEXT_DAY = False # 预约明天而不是今天的
 
                 
@@ -48,7 +48,7 @@ def login_and_reserve(users, usernames, passwords, action, success_list=None):
 
 def main(users, action=False):
     current_time = get_current_time(action)
-    logging.info(f"start time {current_time}, action {'on' if action else 'off'}")
+    logging.info(f"**********start time {current_time}, action {'on' if action else 'off'}********")
     attempt_times = 0
     usernames, passwords = None, None
     if action:
@@ -69,6 +69,8 @@ def main(users, action=False):
             return
 
 def debug(users, action=False):
+    current_time = get_current_time(action)
+    logging.info(f'****debug_current_time{current_time}************')
     logging.info(f"Global settings: \nSLEEPTIME: {SLEEPTIME}\nENDTIME: {ENDTIME}\nENABLE_SLIDER: {ENABLE_SLIDER}\nRESERVE_NEXT_DAY: {RESERVE_NEXT_DAY}")
     suc = False
     logging.info(f" Debug Mode start! , action {'on' if action else 'off'}")
@@ -76,6 +78,7 @@ def debug(users, action=False):
         usernames, passwords = get_user_credentials(action)
         logging.info(f"usernames:{usernames}")
     current_dayofweek = get_current_dayofweek(action)
+  
     for index, user in enumerate(users):
         username, password, times, roomid, seatid, daysofweek = user.values()
         if type(seatid) == str:
@@ -106,6 +109,8 @@ def get_roomid(args1, args2):
 
 
 if __name__ == "__main__":
+    # time = get_current_time(action)
+    # if time < 
     config_path = os.path.join(os.path.dirname(__file__), 'config.json')
     parser = argparse.ArgumentParser(prog='Chao Xing seat auto reserve')
     parser.add_argument('-u','--user', default=config_path, help='user config file')
