@@ -104,6 +104,7 @@ def debug(users, action=False):
         s.requests.headers.update({'Host': 'office.chaoxing.com'})
         suc = s.submit(times, roomid, seatid, action)
         if suc:
+            logging.info(f"reverse successfully")
             return
 
 def get_roomid(args1, args2):
