@@ -14,7 +14,7 @@ get_current_dayofweek = lambda action: time.strftime("%A", time.localtime(time.t
 
 
 SLEEPTIME = 0.2 # 每次抢座的间隔
-ENDTIME = "07:01:00" # 根据学校的预约座位时间+1min即可
+ENDTIME = "07:05:00" # 根据学校的预约座位时间+1min即可
 
 ENABLE_SLIDER = False # 是否有滑块验证
 MAX_ATTEMPT = 1 # 最大尝试次数
@@ -49,8 +49,15 @@ def login_and_reserve(users, usernames, passwords, action, success_list=None):
 
 def main(users, action=False):
     current_time = get_current_time(action)
-    
+    current_time_dt = datetime.strptime(current_time, "%H:%M:%S")
+    target_time_dt = datetime.strptime("7:00:00", "%H:%M:%S")
+    while current_time_dt <= target_time_dt:
+      time.sleep(15)
+      logging.info('sleep 15s')
+      current_time = get_current_time(action)
+      current_time_dt = datetime.strptime(current_time, "%H:%M:%S")
     logging.info(f"**********start time {current_time}, action {'on' if action else 'off'}********")
+  
     attempt_times = 0
     usernames, passwords = None, None
     if action:
