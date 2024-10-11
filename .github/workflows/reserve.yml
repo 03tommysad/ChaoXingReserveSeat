@@ -31,6 +31,6 @@ jobs:
           PASSWORDS: ${{ secrets.PASSWORDS }}
         run: |
           date 
-          python main.py -m main --action
+          python main.py -m reverse --action
 
 
