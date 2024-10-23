@@ -6,13 +6,6 @@
         "roomid":"2609",
         "seatid":["167","168","169","170","171","172"],
         "daysofweek": ["Monday" , "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday"]
-    },
-        {"username": "",
-        "password": "",
-        "time": ["11:00","22:00"],
-        "roomid":"2609",
-        "seatid":["168","169","170","171","172"],
-        "daysofweek": ["Monday" , "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday"]
     }
     ]
 }
