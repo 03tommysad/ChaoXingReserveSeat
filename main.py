@@ -51,7 +51,7 @@ def main(users, action=False):
     current_time = get_current_time(action)
     current_time_dt = datetime.strptime(current_time, "%H:%M:%S")
     target_time_dt = datetime.strptime("7:00:00", "%H:%M:%S")
-    while current_time_dt >= target_time_dt:
+    while current_time_dt <= target_time_dt:
       time.sleep(2)
       logging.info('sleep 2s')
       current_time = get_current_time(action)
