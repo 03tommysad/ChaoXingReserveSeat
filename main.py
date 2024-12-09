@@ -1,4 +1,3 @@
-
 import json
 import time
 import argparse
@@ -37,13 +36,22 @@ def login_and_reserve(users, usernames, passwords, action, success_list=None):
             logging.info("Today not set to reserve")
             continue
         if not success_list[index]: 
-            logging.info(f"----------- {username} -- {times} -- {seatid} try -----------")
-            s = reserve(sleep_time=SLEEPTIME, max_attempt=MAX_ATTEMPT, enable_slider=ENABLE_SLIDER, reserve_next_day=RESERVE_NEXT_DAY)
-            s.get_login_status()
-            s.login(username, password)
-            s.requests.headers.update({'Host': 'office.chaoxing.com'})
-            suc = s.submit(times, roomid, seatid, action)
-            success_list[index] = suc
+            try:
+                logging.info(f"----------- {username} -- {times} -- {seatid} try -----------")
+                s = reserve(sleep_time=SLEEPTIME, max_attempt=MAX_ATTEMPT, enable_slider=ENABLE_SLIDER, reserve_next_day=RESERVE_NEXT_DAY)
+                s.get_login_status()
+                s.login(username, password)
+                s.requests.headers.update({'Host': 'office.chaoxing.com'})
+                suc = s.submit(times, roomid, seatid, action)
+                success_list[index] = suc
+            except json.JSONDecodeError as e:
+                logging.error(f"JSON解析错误: {e}")
+                logging.info("等待5秒后重试...")
+                time.sleep(5)
+                continue
+            except Exception as e:
+                logging.error(f"发生其他错误: {e}")
+                continue
     return success_list
 
 
@@ -67,15 +75,17 @@ def main(users, action=False):
     today_reservation_num = sum(1 for d in users if current_dayofweek in d.get('daysofweek'))
     while current_time < ENDTIME:
         attempt_times += 1
-        # try:
-        success_list = login_and_reserve(users, usernames, passwords, action, success_list)
-        # except Exception as e:
-        #     print(f"An error occurred: {e}")
-        print(f"attempt time {attempt_times}, time now {current_time}, success list {success_list}")
-        current_time = get_current_time(action)
-        if sum(success_list) == today_reservation_num:
-            print(f"reserved successfully!")
-            return
+        try:
+            success_list = login_and_reserve(users, usernames, passwords, action, success_list)
+            print(f"attempt time {attempt_times}, time now {current_time}, success list {success_list}")
+            current_time = get_current_time(action)
+            if sum(success_list) == today_reservation_num:
+                print(f"reserved successfully!")
+                return
+        except Exception as e:
+            logging.error(f"发生错误: {e}")
+            time.sleep(2)  # 发生错误时等待一段时间再重试
+            continue
 
 def debug(users, action=False):
     current_time = get_current_time(action)
