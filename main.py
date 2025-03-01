@@ -60,8 +60,8 @@ def main(users, action=False):
     current_time_dt = datetime.strptime(current_time, "%H:%M:%S")
     target_time_dt = datetime.strptime("7:00:00", "%H:%M:%S")
     while current_time_dt <= target_time_dt:
-      time.sleep(2)
-      logging.info('sleep 2s')
+      time.sleep(0.5)
+      logging.info('sleep 0.5s')
       current_time = get_current_time(action)
       current_time_dt = datetime.strptime(current_time, "%H:%M:%S")
     logging.info(f"**********start time {current_time}, action {'on' if action else 'off'}********")
